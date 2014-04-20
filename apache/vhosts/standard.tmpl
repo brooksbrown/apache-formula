@@ -23,8 +23,7 @@
     'Directory_default': '{0}/{1}'.format(map.wwwdir, sitename),
     'Directory': {
         'Options': '-Indexes FollowSymLinks',
-        'Order': 'allow,deny',
-        'Allow': 'from all',
+        'Require': 'all granted',
         'AllowOverride': 'None',
     },
 } %}
@@ -48,8 +47,7 @@
     {% for path, dir in site.get('Directory', {}).items() %}
     {% set dvals = {
         'Options': dir.get('Options', vals.Directory.Options),
-        'Order': dir.get('Order', vals.Directory.Order),
-        'Allow': dir.get('Allow', vals.Directory.Allow),
+        'Require': dir.get('Require', vals.Directory.Require),
         'AllowOverride': dir.get('AllowOverride', vals.Directory.AllowOverride),
     } %}
 
@@ -57,8 +55,7 @@
 
     <Directory "{{ path }}">
         {% if dir.get('Options') != False %}Options {{ dvals.Options }}{% endif %}
-        {% if dir.get('Order') != False %}Order {{ dvals.Order }}{% endif %}
-        {% if dir.get('Allow') != False %}Allow {{ dvals.Allow }}{% endif %}
+        {% if dir.get('Require') != False %}Require {{ dvals.Require }}{% endif %}
         {% if dir.get('AllowOverride') != False %}AllowOverride {{ dvals.AllowOverride }}{% endif %}
 
         {% if dir.get('Formula_Append') %}
